@@ -10,3 +10,13 @@ module.exports = [
   'strapi::favicon',
   'strapi::public',
 ];
+
+module.exports = {
+  settings: {
+    cors: {
+      enabled: true,
+      origin: ['https://to-do-app-frontend-2u8b.onrender.com'], // Replace with your actual domain
+      headers: '*',
+    },
+  },
+};
