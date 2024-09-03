@@ -8,9 +8,9 @@
       user: env('DATABASE_USERNAME'),
       password: env('DATABASE_PASSWORD'),
       schema: env('DATABASE_SCHEMA'),
-      ssl: env.bool('DATABASE_SSL', false) ? {
-        rejectUnauthorized: env.bool('DATABASE_SSL_SELF', false) // SSL config for self-signed certificates
-      } : false,
+      ssl: env.bool('DATABASE_SSL', true) ? {
+        rejectUnauthorized: env.bool('DATABASE_SSL_SELF', true) // SSL config for self-signed certificates
+      } : true,
     },
     debug: false,
   },
