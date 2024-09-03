@@ -1,20 +1,17 @@
-
-  // strapi-api/config/database.js
-  module.exports = ({ env }) => ({
+module.exports = ({ env }) => ({
+  connection: {
+    client: 'postgres',
     connection: {
-      client: 'postgres',
-      connection: {
-        host: env('DATABASE_HOST', 'localhost'),
-        port: env.int('DATABASE_PORT', 5432),
-        database: env('DATABASE_NAME', 'tasks_h0ti'),
-        user: env('DATABASE_USERNAME', 'qudsia'),
-        password: env('DATABASE_PASSWORD', 'SoVTwx689num9MNcNPM87b5M4ctdbSKD'),
-        schema: env('DATABASE_SCHEMA', 'public'),
-        ssl: env.bool('DATABASE_SSL', false) ? {
-          rejectUnauthorized: env.bool('DATABASE_SSL_SELF', false) // SSL config for self-signed certificates
-        } : false,
-      },
-      debug: false,
+      host: env('DATABASE_HOST'),
+      port: env.int('DATABASE_PORT'),
+      database: env('DATABASE_NAME'),
+      user: env('DATABASE_USERNAME'),
+      password: env('DATABASE_PASSWORD'),
+      schema: env('DATABASE_SCHEMA'),
+      ssl: env.bool('DATABASE_SSL', env('NODE_ENV') === 'production') ? {
+        rejectUnauthorized: env.bool('DATABASE_SSL_SELF', false)
+      } : false,
     },
-  });
-  
+    debug: env('NODE_ENV') !== 'production',
+  },
+});
