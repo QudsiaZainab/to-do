@@ -1,9 +1,9 @@
-const path = require('path');
+// const path = require('path');
 
-module.exports = ({ env }) => {
-  const client = env('DATABASE_CLIENT', 'postgres');
+// module.exports = ({ env }) => {
+//   const client = env('DATABASE_CLIENT', 'postgres');
 
-  const connections = {
+  // const connections = {
     // mysql: {
     //   connection: {
     //     connectionString: env('DATABASE_URL'),
@@ -47,21 +47,23 @@ module.exports = ({ env }) => {
     //   },
     //   pool: { min: env.int('DATABASE_POOL_MIN', 2), max: env.int('DATABASE_POOL_MAX', 10) },
     // },
-    postgres: {
-      connection: {
-        connectionString: env('DATABASE_URL'),
-        host: env('DATABASE_HOST', 'localhost'),
-        port: env.int('DATABASE_PORT', 5432),
-        database: env('DATABASE_NAME', 'strapi'),
-        user: env('DATABASE_USERNAME', 'strapi'),
-        password: env('DATABASE_PASSWORD', 'strapi'),
-        ssl: env.bool('DATABASE_SSL', true) ? {
-          rejectUnauthorized: env.bool('DATABASE_SSL_REJECT_UNAUTHORIZED', true),
-        } : false,
-        schema: env('DATABASE_SCHEMA', 'public'),
-      },
-      pool: { min: env.int('DATABASE_POOL_MIN', 2), max: env.int('DATABASE_POOL_MAX', 10) },
-    },
+  
+      // connection: {
+      //   client: 'postgres',
+      //   connection: {
+      //     host: env('DATABASE_HOST', '127.0.0.1'),
+      //     port: env.int('DATABASE_PORT', 5432),
+      //     database: env('DATABASE_NAME', 'strapi'),
+      //     user: env('DATABASE_USERNAME', 'strapi'),
+      //     password: env('DATABASE_PASSWORD', 'strapi'),
+      //     schema: env('DATABASE_SCHEMA', 'public'), // Not required
+      //     ssl: {
+      //       rejectUnauthorized: env.bool('DATABASE_SSL_SELF', false), // For self-signed certificates
+      //     },
+      //   },
+      //   debug: false,
+      // },
+    
     // sqlite: {
     //   connection: {
     //     filename: path.join(
@@ -72,16 +74,16 @@ module.exports = ({ env }) => {
     //   },
     //   useNullAsDefault: true,
     // },
-  };
+//   };
 
-  return {
-    connection: {
-      client,
-      ...connections[client],
-      acquireConnectionTimeout: env.int('DATABASE_CONNECTION_TIMEOUT', 60000),
-    },
-  };
-};
+//   return {
+//     connection: {
+//       client,
+//       ...connections[client],
+//       acquireConnectionTimeout: env.int('DATABASE_CONNECTION_TIMEOUT', 60000),
+//     },
+//   };
+// };
 
 
   // strapi-api/config/database.js
@@ -100,4 +102,24 @@ module.exports = ({ env }) => {
   //     debug: false,
   //   },
   // });
+
+
+
+  module.exports = ({ env }) => ({
+    connection: {
+      client: 'postgres',
+      connection: {
+        host: env('DATABASE_HOST', '127.0.0.1'),
+        port: env.int('DATABASE_PORT', 5432),
+        database: env('DATABASE_NAME', 'strapi'),
+        user: env('DATABASE_USERNAME', 'strapi'),
+        password: env('DATABASE_PASSWORD', 'strapi'),
+        schema: env('DATABASE_SCHEMA', 'public'), // Not required
+        ssl: {
+          rejectUnauthorized: env.bool('DATABASE_SSL_SELF', false), // For self-signed certificates
+        },
+      },
+      debug: false,
+    },
+  });
   
